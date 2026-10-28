@@ -98,7 +98,7 @@ npm run build:linux
 
 ---
 
-<h2 id="english-documentation">🇬🇧 English Documentation</h2>
+<h2 id="english-documentation">English Documentation</h2>
 
 ### 🌟 Features
 
