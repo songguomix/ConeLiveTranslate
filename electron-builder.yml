@@ -1,0 +1,48 @@
+appId: com.conelivetranslate.app
+productName: ConeLiveTranslate
+directories:
+  output: dist
+  buildResources: assets
+
+files:
+  - out/**/*
+  - icon.*
+  - assets/**/*
+  - package.json
+
+mac:
+  category: public.app-category.utilities
+  target:
+    - target: default
+      arch:
+        - x64
+        - arm64
+  icon: icon.icns
+  darkModeSupport: true
+  extendInfo:
+    NSMicrophoneUsageDescription: "ConeLiveTranslate 需要麦克风权限以捕获外部声音进行实时识别与翻译。"
+    NSScreenCaptureUsageDescription: "ConeLiveTranslate 需要屏幕与系统音频采集权限以录制系统声音进行实时翻译。"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  icon: icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: ConeLiveTranslate
+
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Utility
+  icon: icon.png

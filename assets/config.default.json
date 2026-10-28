@@ -1,0 +1,54 @@
+{
+  "stt": {
+    "backend": "openai",
+    "base_url": "https://api.openai.com/v1",
+    "api_key": "",
+    "model": "whisper-1",
+    "language": "auto",
+    "timeout": 30
+  },
+  "translate": {
+    "backend": "mymemory",
+    "base_url": "https://api.openai.com/v1",
+    "api_key": "",
+    "model": "gpt-4o-mini",
+    "source_lang": "auto",
+    "target_lang": "中文",
+    "timeout": 30
+  },
+  "tts": {
+    "enabled": false,
+    "backend": "mimo",
+    "base_url": "https://api.xiaomimimo.com/v1",
+    "api_key": "",
+    "model": "mimo-v2.5-tts",
+    "voice": "mimo_default",
+    "style": "",
+    "volume": 1.0,
+    "output_device_name": "",
+    "timeout": 30
+  },
+  "audio": {
+    "device_name": "",
+    "sample_rate": 16000,
+    "channels": 1,
+    "frames_per_buffer": 1024,
+    "energy_threshold": 300.0,
+    "chunk_duration": 2.0
+  },
+  "ui": {
+    "opacity": 0.92,
+    "bg_color": "#1C1C1E",
+    "bg_alpha": 216,
+    "accent_color": "#0A84FF",
+    "font_family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+    "font_size_original": 16,
+    "font_size_translated": 18,
+    "font_color": "#FFFFFF",
+    "width": 520,
+    "height": 180,
+    "x": 100,
+    "y": 100
+  },
+  "enabled": false
+}
