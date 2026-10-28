@@ -43,6 +43,7 @@ nsis:
 linux:
   target:
     - AppImage
-    - deb
+    - tar.gz
   category: Utility
   icon: icon.png
+  maintainer: "Pinecone <songguomix@gmail.com>"

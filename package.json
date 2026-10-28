@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ConeLiveTranslate · 跨平台实时语音翻译悬浮窗 (Windows / macOS / Linux)",
   "main": "./out/main/index.js",
-  "author": "ConeLiveTranslate Team",
+  "author": "Pinecone <songguomix@gmail.com>",
   "license": "MIT",
   "scripts": {
     "format": "prettier --write .",
