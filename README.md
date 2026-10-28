@@ -38,16 +38,18 @@
    - **状态指示与实时电平**：内置音量电平条（RMS Visualizer）与呼吸状态灯（已停止 / 监听中 / 录音中 / 识别中 / 翻译中 / 错误）。
    - **双语对照排版**：上方优雅暗白原文，下方高亮白译文，字号与字体均可自由定义。
 
-4. **多模型后端开箱即用**
+4. **多模型后端全量统一 /chat/completions**
    - **语音转文字 (STT)**：
-     - OpenAI 标准兼容接口（如 `whisper-1`，端点为 `/transcriptions`）
-     - 小米 MiMo 接口（`mimo-v2.5-asr`，多模态 `input_audio` 内嵌）
+     - OpenAI 兼容接口（默认统一 `${base_url}/chat/completions`，采用原生 `input_audio` 多模态协议，自动向下兼容 `/transcriptions`）
+     - 小米 MiMo 接口（`mimo-v2.5-asr`，基于 `/chat/completions` 原生语音识别）
+     - Whisper 专用接口（传统 `/transcriptions` 端点）
    - **文本翻译**：
      - **MyMemory**：**完全免费、无需 API Key、国内开箱即用**
-     - OpenAI 标准兼容接口（如 `gpt-4o-mini`、`deepseek-chat` 等标准 `/chat/completions`）
+     - OpenAI 兼容接口（如 `gpt-4o-mini`、`deepseek-chat` 等标准 `${base_url}/chat/completions`，支持 SSE 实时流式吐字）
    - **同声传译 / 配音 (TTS)**：
-     - 小米 MiMo TTS (`mimo-v2.5-tts`)
-     - OpenAI 标准兼容 TTS (`/speech`)
+     - OpenAI 兼容接口（默认统一 `${base_url}/chat/completions`，支持大模型原生语音输出，自动向下兼容 `/speech`）
+     - 小米 MiMo TTS (`mimo-v2.5-tts`，基于 `/chat/completions`)
+     - OpenAI Speech 专用接口（传统 `/speech` 端点）
      - **独立播放设备路由**：支持将配音路由至耳机，与系统采集设备分开，杜绝内录回环啸叫。
 
 ---
@@ -80,7 +82,7 @@ npm run build:mac
 # 打包 Windows 原生安装包 (.exe / 便携版)
 npm run build:win
 
-# 打包 Linux 原生安装包 (.AppImage / .deb)
+# 打包 Linux 原生安装包 (.AppImage / .tar.gz)
 npm run build:linux
 ```
 
@@ -90,11 +92,11 @@ npm run build:linux
 
 点击悬浮窗右上角 **⚙** 按钮或托盘菜单选择 **打开设置 (Dashboard)**：
 
-| 模块 | 推荐配置 | 端点尾缀规范 (去 /audio) | 说明 |
+| 模块 | 推荐配置 | 默认统一端点规范 | 说明 |
 | :--- | :--- | :--- | :--- |
-| **STT** | `whisper-1` 或 `mimo-v2.5-asr` | `${base_url}/transcriptions` | 填写 Base URL（如 `https://api.openai.com/v1`）与 Key |
-| **翻译** | `MyMemory` (免费) 或 `gpt-4o-mini` | `${base_url}/chat/completions` | MyMemory 免 Key 开箱即用；也支持各类 OpenAI 兼容模型 |
-| **TTS** | `mimo-v2.5-tts` 或 `alloy` | `${base_url}/speech` | 可选朗读，建议在音频设置中将输出设备设为耳机 |
+| **STT** | `gpt-4o-audio-preview` 或 `mimo-v2.5-asr` | `${base_url}/chat/completions` | 全面统一 Chat Completions 原生音频识别；亦保留 `/transcriptions` 备用 |
+| **翻译** | `MyMemory` (免费) 或 `gpt-4o-mini` | `${base_url}/chat/completions` | MyMemory 免 Key 开箱即用；也支持各类 OpenAI 兼容模型与 SSE 流式 |
+| **TTS** | `gpt-4o-audio-preview` 或 `mimo-v2.5-tts` | `${base_url}/chat/completions` | 全面统一 Chat Completions 原生配音合成；亦保留 `/speech` 备用 |
 
 ---
 
@@ -120,16 +122,18 @@ npm run build:linux
    - **Live Volume & State Indicators**: Dynamic RMS level bar and pulsating status badges.
    - **Bilingual Subtitles**: Original text on top, translated text below, with fully customizable font families, sizes, and colors.
 
-4. **Multi-Backend Support**
+4. **Unified /chat/completions Multi-Backend Architecture**
    - **Speech-to-Text (STT)**:
-     - OpenAI compatible (`whisper-1` via `/transcriptions`)
+     - OpenAI compatible (default unified `${base_url}/chat/completions` with native `input_audio` multimodal support, auto fallback to `/transcriptions`)
      - Xiaomi MiMo (`mimo-v2.5-asr` via `/chat/completions`)
+     - Whisper dedicated legacy endpoint (`/transcriptions`)
    - **Translation**:
      - **MyMemory**: 100% free, out-of-the-box, no API key required.
-     - OpenAI compatible (`gpt-4o-mini`, `deepseek`, etc. via `/chat/completions`)
+     - OpenAI compatible (`gpt-4o-mini`, `deepseek`, etc. via `${base_url}/chat/completions` with SSE streaming)
    - **Dubbing (TTS, Optional)**:
-     - Xiaomi MiMo TTS (`mimo-v2.5-tts`)
-     - OpenAI compatible TTS (`/speech`)
+     - OpenAI compatible (default unified `${base_url}/chat/completions` with native chat audio output, auto fallback to `/speech`)
+     - Xiaomi MiMo TTS (`mimo-v2.5-tts` via `/chat/completions`)
+     - OpenAI Speech dedicated legacy endpoint (`/speech`)
      - Independent audio device routing to avoid acoustic loopback.
 
 ---

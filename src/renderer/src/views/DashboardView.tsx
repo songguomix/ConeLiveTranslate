@@ -191,7 +191,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ initialConfig }) =
                 <select
                   value={cfg.stt.backend}
                   onChange={(e) => {
-                    const b = e.target.value as 'openai' | 'mimo'
+                    const b = e.target.value as 'openai' | 'mimo' | 'whisper'
                     setCfg({
                       ...cfg,
                       stt: {
@@ -200,15 +200,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ initialConfig }) =
                         base_url:
                           b === 'mimo'
                             ? 'https://api.xiaomimimo.com/v1'
-                            : 'https://api.openai.com/v1',
-                        model: b === 'mimo' ? 'mimo-v2.5-asr' : 'whisper-1'
+                            : cfg.stt.base_url || 'https://api.openai.com/v1',
+                        model:
+                          b === 'mimo'
+                            ? 'mimo-v2.5-asr'
+                            : b === 'whisper'
+                              ? 'whisper-1'
+                              : 'gpt-4o-audio-preview'
                       }
                     })
                   }}
                   className="w-full bg-[#2C2C2E] border border-[#3A3A3C] rounded-lg px-3 py-1.5 text-xs text-white focus:border-apple-blue focus:outline-none"
                 >
-                  <option value="openai">OpenAI 兼容 (/transcriptions)</option>
-                  <option value="mimo">小米 MiMo (mimo-v2.5-asr)</option>
+                  <option value="openai">OpenAI 兼容 (/chat/completions)</option>
+                  <option value="mimo">小米 MiMo (/chat/completions)</option>
+                  <option value="whisper">Whisper 专用 (/transcriptions)</option>
                 </select>
               </div>
 
@@ -308,7 +314,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ initialConfig }) =
                   className="w-full bg-[#2C2C2E] border border-[#3A3A3C] rounded-lg px-3 py-1.5 text-xs text-white focus:border-apple-blue focus:outline-none"
                 >
                   <option value="mymemory">MyMemory (开箱即用，免费无需 Key)</option>
-                  <option value="openai">OpenAI 兼容 (如 GPT-4o-mini / DeepSeek 等)</option>
+                  <option value="openai">OpenAI 兼容 (/chat/completions)</option>
                 </select>
               </div>
 
@@ -439,7 +445,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ initialConfig }) =
                 <select
                   value={cfg.tts.backend}
                   onChange={(e) => {
-                    const b = e.target.value as 'mimo' | 'openai'
+                    const b = e.target.value as 'openai' | 'mimo' | 'speech'
                     setCfg({
                       ...cfg,
                       tts: {
@@ -448,16 +454,22 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ initialConfig }) =
                         base_url:
                           b === 'mimo'
                             ? 'https://api.xiaomimimo.com/v1'
-                            : 'https://api.openai.com/v1',
-                        model: b === 'mimo' ? 'mimo-v2.5-tts' : 'tts-1',
+                            : cfg.tts.base_url || 'https://api.openai.com/v1',
+                        model:
+                          b === 'mimo'
+                            ? 'mimo-v2.5-tts'
+                            : b === 'speech'
+                              ? 'tts-1'
+                              : 'gpt-4o-audio-preview',
                         voice: b === 'mimo' ? 'mimo_default' : 'alloy'
                       }
                     })
                   }}
                   className="w-full bg-[#2C2C2E] border border-[#3A3A3C] rounded-lg px-3 py-1.5 text-xs text-white focus:border-apple-blue focus:outline-none"
                 >
-                  <option value="mimo">小米 MiMo (mimo-v2.5-tts)</option>
-                  <option value="openai">OpenAI 兼容 (/speech)</option>
+                  <option value="openai">OpenAI 兼容 (/chat/completions)</option>
+                  <option value="mimo">小米 MiMo (/chat/completions)</option>
+                  <option value="speech">OpenAI Speech 专用 (/speech)</option>
                 </select>
               </div>
 

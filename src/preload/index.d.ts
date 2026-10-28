@@ -1,6 +1,6 @@
 export interface AppConfig {
   stt: {
-    backend: 'openai' | 'mimo'
+    backend: 'openai' | 'mimo' | 'whisper'
     base_url: string
     api_key: string
     model: string
@@ -18,7 +18,7 @@ export interface AppConfig {
   }
   tts: {
     enabled: boolean
-    backend: 'mimo' | 'openai'
+    backend: 'openai' | 'mimo' | 'speech'
     base_url: string
     api_key: string
     model: string
